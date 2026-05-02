@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Information Box Pro</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="app">
+      <!-- Auth Section -->
+      <div id="login-screen" class="screen">
+        <div class="login-card">
+          <img src="./favicon.svg" width="64" height="64" alt="Information Box Pro Logo" style="margin-bottom: 16px;">
+          <h1>Information Box Pro</h1>
+          <p>Your Service Requirement Knowledge Base</p>
+          <button id="google-login-btn" class="btn primary-btn">
+            <svg viewBox="0 0 48 48" width="24px" height="24px"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"/><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"/><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"/><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"/></svg>
+            Sign in with Google
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Header (shared between dashboard and detail screens) -->
+      <header class="app-header hidden" id="main-header">
+        <h2 id="app-title" style="display: flex; align-items: center; gap: 12px;">
+          <img src="./favicon.svg" width="32" height="32" alt="Logo">
+          Information Box Pro
+        </h2>
+        <div class="user-controls">
+          <span id="user-name"></span>
+          <button id="logout-btn" class="btn outline-btn">Logout</button>
+        </div>
+      </header>
+
+      <!-- Dashboard Screen (List of Services) -->
+      <div id="dashboard-screen" class="screen hidden">
+        <main class="dashboard-content">
+          <div class="toolbar">
+            <input type="text" id="search-bar" placeholder="Search for a service (e.g. PAN Card)..." class="search-input">
+            <button id="add-service-btn" class="btn primary-btn">+ Add Service Folder</button>
+          </div>
+
+          <div id="services-list" class="folder-grid">
+            <!-- Service folders will be injected here -->
+          </div>
+        </main>
+      </div>
+
+      <!-- Service Detail Screen (Inside a specific service folder) -->
+      <div id="service-detail-screen" class="screen hidden">
+        <main class="detail-content">
+          <div class="detail-header">
+            <button id="back-btn" class="btn outline-btn">← Back to Services</button>
+            <div class="service-title-container" style="display: flex; align-items: center; gap: 8px; flex: 1; justify-content: center;">
+              <input type="text" id="detail-service-name" class="service-name-input" maxlength="21" style="font-size: 28px; font-weight: 700; color: var(--text-main); border: none; background: transparent; text-align: center; border-bottom: 2px solid transparent; transition: all 0.2s; width: auto; min-width: 200px;">
+              <svg class="edit-icon" viewBox="0 0 24 24" width="20" height="20" stroke="#9CA3AF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="pointer-events: none;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+              <button id="save-service-name-btn" class="btn primary-btn hidden" style="padding: 6px 12px; font-size: 13px;">Save Name</button>
+            </div>
+            <button id="delete-service-btn" class="btn danger-btn">Delete Service</button>
+          </div>
+
+          <div class="tabs-interface">
+            <div class="tabs-sidebar">
+              <h3>Options / Actions</h3>
+              <ul id="tabs-list" class="tabs-list">
+                <!-- Tab titles injected here -->
+              </ul>
+              <button id="create-tab-btn" class="btn outline-btn full-width">+ New Option</button>
+            </div>
+            
+            <div class="tab-content-area" id="tab-content-area">
+              <div class="empty-state" id="empty-tab-state">
+                <p>Select an option from the left or create a new one.</p>
+              </div>
+              
+              <div id="active-tab-editor" class="hidden">
+                <div class="editor-header">
+                  <div class="title-input-group" style="display: flex; align-items: center; flex: 1;">
+                    <input type="text" id="edit-tab-name" class="tab-name-input" placeholder="Option Name (e.g. New Apply)" maxlength="21">
+                    <svg class="edit-icon" viewBox="0 0 24 24" width="20" height="20" stroke="#9CA3AF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 12px; pointer-events: none;">
+                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                    </svg>
+                  </div>
+                  <button id="delete-tab-btn" class="btn danger-btn">Delete Option</button>
+                </div>
+                <textarea id="edit-tab-content" class="tab-content-textarea" placeholder="List all documents and requirements here..."></textarea>
+                <div class="editor-footer">
+                  <button id="save-tab-btn" class="btn primary-btn">Save Changes</button>
+                  <span id="save-status" class="save-status"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Create New Service Modal -->
+    <div id="new-service-modal" class="modal hidden">
+      <div class="modal-content small-modal">
+        <div class="modal-header">
+          <h3>Create New Service</h3>
+          <button id="close-service-modal" class="icon-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <label for="new-service-name">Service Name</label>
+          <input type="text" id="new-service-name" placeholder="e.g., PAN Card, Passport..." maxlength="21">
+        </div>
+        <div class="modal-footer">
+          <button id="create-service-btn" class="btn primary-btn">Create</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Create New Tab Modal -->
+    <div id="new-tab-modal" class="modal hidden">
+      <div class="modal-content small-modal">
+        <div class="modal-header">
+          <h3>Add New Option</h3>
+          <button id="close-tab-modal" class="icon-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <label for="new-tab-name">Option Name</label>
+          <input type="text" id="new-tab-name" placeholder="e.g., New Apply, Update..." maxlength="21">
+        </div>
+        <div class="modal-footer">
+          <button id="add-new-tab-btn" class="btn primary-btn">Add Option</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
