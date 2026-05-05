@@ -33,6 +33,9 @@
         </h2>
         <div class="user-controls">
           <span id="user-name"></span>
+          <button id="settings-btn" class="icon-btn" title="Settings">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          </button>
           <button id="logout-btn" class="btn outline-btn">Logout</button>
         </div>
       </header>
@@ -131,6 +134,151 @@
         </div>
         <div class="modal-footer">
           <button id="add-new-tab-btn" class="btn primary-btn">Add Option</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+      <div class="modal-content medium-modal">
+        <div class="modal-header">
+          <h3>Settings</h3>
+          <button id="close-settings-modal" class="icon-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="settings-option">
+            <div class="option-info">
+              <h4>Edit Mode</h4>
+              <p>Enable or disable editing features across the app.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="edit-mode-toggle">
+              <span class="slider round"></span>
+            </label>
+          </div>
+          
+          <div class="settings-divider"></div>
+          
+          <div id="password-setup-section">
+            <h4>Security</h4>
+            <div id="password-status-msg" class="status-info">No password set. Set a password to protect edit mode.</div>
+            <button id="set-password-btn" class="btn secondary-btn">
+              <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              Set Master Password
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Password Prompt Modal -->
+    <div id="password-prompt-modal" class="modal hidden">
+      <div class="modal-content small-modal">
+        <div class="modal-header">
+          <h3 id="password-prompt-title">Enter Password</h3>
+          <button id="close-password-prompt" class="icon-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p id="password-prompt-msg">Please enter your master password to continue.</p>
+          <div class="password-input-wrapper">
+            <input type="password" id="prompt-password-input" placeholder="Password">
+            <button class="toggle-password-btn" type="button" tabindex="-1">
+              <svg class="eye-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </button>
+          </div>
+          <div id="password-error" class="error-msg hidden">Incorrect password. Please try again.</div>
+        </div>
+        <div class="modal-footer">
+          <button id="confirm-password-btn" class="btn primary-btn">Verify</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Set Password Modal -->
+    <div id="set-password-modal" class="modal hidden">
+      <div class="modal-content small-modal">
+        <div class="modal-header">
+          <h3>Set Master Password</h3>
+          <button id="close-set-password-modal" class="icon-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <label for="new-password">New Password</label>
+          <div class="password-input-wrapper">
+            <input type="password" id="new-password" placeholder="At least 4 characters">
+            <button class="toggle-password-btn" type="button" tabindex="-1">
+              <svg class="eye-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </button>
+          </div>
+          
+          <label for="confirm-new-password">Confirm Password</label>
+          <div class="password-input-wrapper">
+            <input type="password" id="confirm-new-password" placeholder="At least 4 characters">
+            <button class="toggle-password-btn" type="button" tabindex="-1">
+              <svg class="eye-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </button>
+          </div>
+
+          <div id="change-recovery-trigger" class="hidden">
+            <button id="toggle-recovery-setup-btn" type="button" class="link-btn">
+              <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span>Change Recovery Method</span>
+            </button>
+          </div>
+
+          <div class="recovery-setup-section">
+            <label class="recovery-title">Recovery Method (to reset/change password)</label>
+            <select id="recovery-method-select" class="select-input">
+              <option value="google">Google Account Email</option>
+              <option value="question">Security Question</option>
+            </select>
+
+            <div id="recovery-google-info" class="recovery-detail">
+              <p>You will need to enter your logged-in Google email to verify identity.</p>
+            </div>
+
+            <div id="recovery-question-info" class="recovery-detail hidden">
+              <select id="security-question-select" class="select-input">
+                <option value="pet">What was the name of your first pet?</option>
+                <option value="city">In what city were you born?</option>
+                <option value="school">What was the name of your elementary school?</option>
+                <option value="mother">What is your mother's maiden name?</option>
+              </select>
+              <input type="text" id="security-answer-input" placeholder="Your Answer">
+            </div>
+          </div>
+
+          <div id="set-password-error" class="error-msg hidden">Passwords do not match.</div>
+        </div>
+        <div class="modal-footer">
+          <button id="save-password-btn" class="btn primary-btn">Save Password</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Identity Verification Modal -->
+    <div id="verify-identity-modal" class="modal hidden">
+      <div class="modal-content small-modal">
+        <div class="modal-header">
+          <h3>Verify Identity</h3>
+          <button id="close-verify-modal" class="icon-btn">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p id="verify-msg" style="margin-bottom: 16px; font-size: 14px; color: var(--text-muted);">Please verify your identity to update your password.</p>
+          
+          <div id="verify-google-section" class="hidden">
+            <label for="verify-email-input">Enter Google Email</label>
+            <input type="text" id="verify-email-input" placeholder="example@gmail.com">
+          </div>
+
+          <div id="verify-question-section" class="hidden">
+            <label id="verify-question-label">Security Question</label>
+            <input type="text" id="verify-answer-input" placeholder="Your Answer">
+          </div>
+
+          <div id="verify-error" class="error-msg hidden">Verification failed. Please try again.</div>
+        </div>
+        <div class="modal-footer">
+          <button id="submit-verify-btn" class="btn primary-btn">Verify</button>
         </div>
       </div>
     </div>
